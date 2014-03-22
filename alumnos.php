@@ -5,6 +5,23 @@ $query_alumnos = "SELECT * FROM alumnos
 				  INNER JOIN sexo 
 				  ON  alumnos.sexo_id = sexo.id_sexo";
 
+
+$action = $_GET["action"];
+
+if (!empty($action) && $action == "delete") {
+	
+	$id_alumno = $_GET["id_alumno"];
+
+	if (!empty($id_alumno)) {
+		$query_eliminar = "DELETE FROM alumnos WHERE id_alumno = $id_alumno";
+
+		if($mysqli->query($query_eliminar))
+			$mensaje = "Registro eliminado";
+		else
+			$mensaje = "Ocurrio un error";
+	}
+}
+
 /**
   * Header file
   */
@@ -29,6 +46,7 @@ $query_alumnos = "SELECT * FROM alumnos
 					<th>Nombre</th>
 					<th>Matricula</th>
 					<th>Sexo</th>
+					<th>Editar</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,6 +63,10 @@ $query_alumnos = "SELECT * FROM alumnos
 					    	echo "<td>"  . $fila['nombre'] . "</td>";
 					    	echo "<td> " . $fila['matricula'] . "</td>";
 					    	echo "<td> " . $fila['nombre_sexo'] . "</td>";
+					    	echo '<td>
+					    			<a class="btn" href="alumnos-editar.php?action=modificar&id_alumno='.$fila['id_alumno'].'">Editar</a>
+					    			<a class="btn" href="alumnos.php?action=delete&id_alumno='.$fila['id_alumno'].'">Eliminar</a>
+					    		  </td>';
 					    echo '</tr>';
 					}
 				}	

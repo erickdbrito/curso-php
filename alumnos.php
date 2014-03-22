@@ -29,6 +29,8 @@ $query_alumnos = "SELECT * FROM alumnos
 					<th>Nombre</th>
 					<th>Matricula</th>
 					<th>Sexo</th>
+					<th>Editar</th>
+					<th>Editar</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,6 +47,10 @@ $query_alumnos = "SELECT * FROM alumnos
 					    	echo "<td>"  . $fila['nombre'] . "</td>";
 					    	echo "<td> " . $fila['matricula'] . "</td>";
 					    	echo "<td> " . $fila['nombre_sexo'] . "</td>";
+					    	echo '<td>
+					    		<a class="btn" href="alumnos-editar.php">Editar</a>
+							<a class="btn" href="alumnos.eliminar.php">Eliminar</a>
+						     </td>';
 					    echo '</tr>';
 					}
 				}	

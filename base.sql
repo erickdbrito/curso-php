@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Servidor: localhost
--- Tiempo de generación: 22-03-2014 a las 13:17:14
+-- Tiempo de generación: 22-03-2014 a las 14:55:14
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -25,14 +25,16 @@ CREATE TABLE `alumnos` (
   `matricula` varchar(15) default NULL,
   `sexo_id` int(11) default NULL,
   `estado` tinytext,
+  `foto` text NOT NULL,
   PRIMARY KEY  (`id_alumno`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 -- 
 -- Volcar la base de datos para la tabla `alumnos`
 -- 
 
-INSERT INTO `alumnos` VALUES (1, 'ERICK BRITO', '10565', 1, '0');
+INSERT INTO `alumnos` VALUES (1, 'ERICK BRITO', '10565', 1, '0', '');
+INSERT INTO `alumnos` VALUES (5, 'Daniel', '430303', 1, 'morelos', '');
 
 -- --------------------------------------------------------
 

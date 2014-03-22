@@ -2,9 +2,8 @@
 require_once("conexion.php");
 
 $query_alumnos = "SELECT * FROM alumnos 
-				  INNER JOIN sexo 
+				  LEFT JOIN sexo 
 				  ON  alumnos.sexo_id = sexo.id_sexo";
-
 
 $action = $_GET["action"];
 
@@ -39,6 +38,9 @@ if (!empty($action) && $action == "delete") {
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Alumnos</h1>
 		
+		<div>
+			<a href="alumnos-editar.php?action=add" class="btn">Añadir alumno</a>
+		</div>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -64,7 +66,7 @@ if (!empty($action) && $action == "delete") {
 					    	echo "<td> " . $fila['matricula'] . "</td>";
 					    	echo "<td> " . $fila['nombre_sexo'] . "</td>";
 					    	echo '<td>
-					    			<a class="btn" href="alumnos-editar.php?action=modificar&id_alumno='.$fila['id_alumno'].'">Editar</a>
+					    			<a class="btn" href="alumnos-editar.php?action=mostrar&id_alumno='.$fila['id_alumno'].'">Editar</a>
 					    			<a class="btn" href="alumnos.php?action=delete&id_alumno='.$fila['id_alumno'].'">Eliminar</a>
 					    		  </td>';
 					    echo '</tr>';

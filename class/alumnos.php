@@ -55,7 +55,9 @@ class alumnos{
 	}// Fin de método 
 
 	function lista_alumnos(){
-		$sql = "SELECT * FROM " . $this->table;	
+		$sql = "SELECT * FROM ".$this->table." 
+				LEFT JOIN sexo 
+				ON  alumnos.sexo_id = sexo.id_sexo";	
 		$oData = new Data($this->db);		
 		return $oData->getList($sql);
 	}

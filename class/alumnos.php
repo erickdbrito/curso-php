@@ -73,9 +73,16 @@ class alumnos{
 	}
 
 	function eliminar_alumno($id_alumno){
-		$sql = "DELETE FROM " . $this->table . " WHERE id_alumno = '" . $id_alumno . "'";
+		$sql = "DELETE " . $this->table . " WHERE id_alumno = '" . $id_alumno . "'";
 		$oData = new Data($this->db);
 		$oData->delete($sql);
+	}// Fin de método delete
+
+	function actualizar_archivo($archivo, $id_alumno){
+		$sql = "UPDATE " . $this->table . "
+				SET archivo = '" . $archivo . "' WHERE id_alumno = '" . $id_alumno . "'";
+		$oData = new Data($this->db);
+		$oData->upDate($sql);
 	}// Fin de método delete
 }
 

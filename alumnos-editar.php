@@ -3,9 +3,11 @@ require_once("conexion.php");
 require_once("class/data/Data.php");
 require_once("class/alumnos.php");
 require_once("class/sexo.php");
+require_once("class/data/UpLoad.php");
 
 $alumno_obj = new alumnos($mysqli);
 $sexo_obj 	= new sexo($mysqli);
+$upload 	= new UpLoad();
 
 $array_sexo = $sexo_obj->obtener_sexo();
 
@@ -56,16 +58,37 @@ if (!empty($action) && $action == "actualizar") {
 
 		$id_alumno = $alumno_obj->agregar_alumno();
 
-		header("Location: alumnos.php");
-		exit;
 	}else{
 
 		$alumno_obj->actualizar_alumno($id_alumno);
 
-		header("Location: alumnos.php");
-		exit;
+		
 	}
+	if($_FILES['fileAlumno']['name'] != "")
+	{
+		$ruta_archivo	  = "files/"; 
 
+		$upload->setExtencionPermitida("jpg");
+		$upload->setExtencionPermitida("png");
+		$upload->setExtencionPermitida("jpeg");
+		$upload->setExtencionPermitida("pdf");
+		$upload->maxSize = 5072000;
+		  	  
+		$obtener_ext = explode(".", $_FILES['fileAlumno']['name']);
+		$extension = ".".$obtener_ext[1];
+		$upload->nameFile =  $nameFile = md5($id_alumno).$extension;
+
+	    
+		if($upload->cargaArchivo($_FILES['fileAlumno'], $ruta_archivo))
+		{
+			$alumno_obj->actualizar_archivo($nameFile, $id_alumno);
+			$mensaje = "El archivo se subio correctamente";
+		}else{
+			$mensaje = '<div class="">El archivo '. $_FILES['fileAlumno']['name']. ' no se cargo correctamente. <strong>Error Message['.$upload->resultados.']</strong></div>';			
+		}
+
+		header("Location: alumnos.php");
+	}
 }
 
 
@@ -77,7 +100,7 @@ if (!empty($action) && $action == "add") {
 	$matricula 	= "";
 	$sexo_id 	= "";
 	$estado 	= "";
-	$archivo 		= "";
+	$archivo 	= "";
 }
 
 /**
@@ -99,7 +122,7 @@ if (!empty($action) && $action == "add") {
         <?php if(!empty($mensaje)){ ?>
 		<div class="label"><?php echo $mensaje; ?></div>
 		<?php } ?>
-		<form  action="" method="POST" name="form_alumnos">
+		<form  action="" method="POST" name="form_alumnos" enctype="multipart/form-data">
 			<input type="hidden" name="action" value="actualizar">
 			<input type="hidden" name="archivo" value="<?php echo $archivo?>">
 			<input type="hidden" name="id_alumno" value="<?php echo $id_alumno?>">
@@ -137,11 +160,11 @@ if (!empty($action) && $action == "add") {
 				<label>archivo</label>
 				<?php
 				if (!empty($archivo)) {
-					$path_image = "files/imagenes/".$archivo;
-					echo '<img src="'.$path_image.'" width="200" height="100">';
+					$path_image = "files/".$archivo;
+					echo '<a href="'.$path_image.'" >';
 				}
 				?>
-				<input type="file" name="file-img"> 
+				<input type="file" name="fileAlumno" class="input-file"> 
 			</div>
 			<div class="form-group">
 				<button type="submit">Guardar Informacion</button>

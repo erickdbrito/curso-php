@@ -6,6 +6,8 @@ class alumnos{
 	var $matricula;
 	var $nombre;
 	var $sexo_id;
+	var $estado;
+	var $archivo;
 
 	function alumnos($db){
 		$this->db=$db;
@@ -18,13 +20,17 @@ class alumnos{
 		id_alumno,
 		matricula,
 		nombre,
-		sexo_id
+		sexo_id,
+		estado,
+		archivo
 		) 
 		VALUES (
 		'',
 		'" . $this->matricula . "',
 		'" . $this->nombre . "',
-		'" . $this->sexo_id . "'
+		'" . $this->sexo_id . "',
+		'" . $this->estado . "',
+		'" . $this->archivo . "'
 		)";
 		return $oData->add($sql); 
 	}// Fin de método add
@@ -34,7 +40,9 @@ class alumnos{
 		$sql="UPDATE " . $this->table . " SET 
 			matricula   = '" . $this->matricula . "',
 			nombre      = '" . $this->nombre . "',
-			sexo_id     = '" . $this->sexo_id . "'
+			sexo_id     = '" . $this->sexo_id . "',
+			estado      = '" . $this->estado . "',
+			archivo     = '" . $this->archivo . "'
 		WHERE id_alumno ='" . $id_alumno . "' LIMIT 1";
 		$oData = new Data($this->db);
 		$oData->upDate($sql);
@@ -50,6 +58,8 @@ class alumnos{
 			$this->matricula  = $a_res["matricula"];
 			$this->nombre     = $a_res["nombre"];
 			$this->sexo_id    = $a_res["sexo_id"];
+			$this->estado     = $a_res["estado"];
+			$this->archivo    = $a_res["archivo"];
 			return true;
 		}// Fin de if						
 	}// Fin de método 

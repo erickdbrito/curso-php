@@ -161,7 +161,7 @@ if (!empty($action) && $action == "add") {
 				<?php
 				if (!empty($archivo)) {
 					$path_image = "files/".$archivo;
-					echo '<a href="'.$path_image.'" >';
+					echo '<a href="'.$path_image.'" >Ver archivo</a>';
 				}
 				?>
 				<input type="file" name="fileAlumno" class="input-file"> 

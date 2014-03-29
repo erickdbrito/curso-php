@@ -137,7 +137,7 @@ if (!empty($action) && $action == "add") {
 			</div>
 			<div class="form-group">
 				<label>Sexo id</label>
-				<select name="sexo_id">
+				<select class="form-control" name="sexo_id">
 					<?php
 					foreach ($array_sexo as $sexo) {
 						$id_sexo 		= $sexo["id_sexo"];

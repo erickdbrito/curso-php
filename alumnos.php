@@ -19,7 +19,7 @@ if (!empty($action) && $action == "delete") {
 		else
 			$mensaje = "Ocurrio un error";
 	}
-}
+} 
 
 /**
   * Header file

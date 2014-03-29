@@ -1,5 +1,14 @@
 <?php
 require_once("conexion.php");
+require_once("class/data/Data.php");
+require_once("class/alumnos.php");
+require_once("class/sexo.php");
+
+$alumno_obj = new alumnos($mysqli);
+$sexo_obj 	= new sexo($mysqli);
+
+$array_sexo = $sexo_obj->obtener_sexo();
+
 /**
  * Mostrar información del alumno
  * @var [type]
@@ -10,25 +19,21 @@ if (!empty($action) && $action == "mostrar") {
 	$id_alumno = $_GET["id_alumno"];
 
 	if (!empty($id_alumno)) {
-		$query_modificar = "SELECT nombre, matricula, sexo_id, estado 
-						   FROM alumnos WHERE id_alumno = $id_alumno";
-
-		if($actualizar =  $mysqli->query($query_modificar))
+		
+		if($alumno_obj->obtener_alumno($id_alumno))
 		{
-			$alumno = $actualizar->fetch_assoc();
-
-			$nombre 	= $alumno["nombre"];
-			$matricula 	= $alumno["matricula"];
-			$sexo_id 	= $alumno["sexo_id"];
-			$estado 	= $alumno["estado"];
-			$foto 		= $alumno["foto"];
+			$nombre 	= $alumno_obj->nombre;
+			$matricula 	= $alumno_obj->matricula;
+			$sexo_id 	= $alumno_obj->sexo_id;
+			$estado 	= $alumno_obj->estado;
+			$archivo 	= $alumno_obj->archivo;
 		}else{
 			$mensaje = "Ocurrio un error";
 			$nombre 	= "";
 			$matricula 	= "";
 			$sexo_id 	= "";
 			$estado 	= "";
-			$foto 		= "";
+			$archivo 	= "";
 		}
 	}
 }
@@ -38,45 +43,24 @@ if (!empty($action) && $action == "mostrar") {
  */
 $action = $_POST["action"];
 if (!empty($action) && $action == "actualizar") {
+	
 	$id_alumno 	= $_POST["id_alumno"];
-	$nombre 	= $_POST["nombre"];
-	$matricula 	= $_POST["matricula"];
-	$sexo_id 	= $_POST["sexo_id"];
-	$estado 	= $_POST["estado"];
-	$foto 		= $_POST["foto"];
+	$alumno_obj->nombre 	= $nombre 	= $_POST["nombre"];
+	$alumno_obj->matricula 	= $matricula 	= $_POST["matricula"];
+	$alumno_obj->sexo_id 	= $sexo_id 	= $_POST["sexo_id"];
+	$alumno_obj->estado 	= $estado 	= $_POST["estado"];
+	$alumno_obj->archivo 	= $archivo 	= $_POST["archivo"];
 
 	if (empty($id_alumno)) {
 		# añadir alumno
-		
-		$query_add = "INSERT INTO alumnos 
-				  VALUES(
-				  	'',
-				  	'$nombre',
-				    '$matricula',
-				    '$sexo_id',
-				    '$estado',
-				    '$foto') ";
-		if($mysqli->query($query_add))
-			$mensaje = "Registro añadido";
-		else
-			$mensaje = "Ocurrio un error al actualizar";
+
+		$id_alumno = $alumno_obj->agregar_alumno();
 
 		header("Location: alumnos.php");
 		exit;
 	}else{
-		# Actualizar alumno
-		$query_actualizar = "UPDATE alumnos SET (
-							 nombre = '$nombre',
-							 matricula = '$matricula',
-							 sexo_id = '$sexo_id',
-							 estado = '$estado',
-							 foto = '$foto')
-							 WHERE id_alumno = $id_alumno";
 
-		if($mysqli->query($query_actualizar))
-			$mensaje = "Registro actualizado";
-		else
-			$mensaje = "Ocurrio un error al actualizar";
+		$alumno_obj->actualizar_alumno($id_alumno);
 
 		header("Location: alumnos.php");
 		exit;
@@ -93,7 +77,7 @@ if (!empty($action) && $action == "add") {
 	$matricula 	= "";
 	$sexo_id 	= "";
 	$estado 	= "";
-	$foto 		= "";
+	$archivo 		= "";
 }
 
 /**
@@ -117,7 +101,7 @@ if (!empty($action) && $action == "add") {
 		<?php } ?>
 		<form  action="" method="POST" name="form_alumnos">
 			<input type="hidden" name="action" value="actualizar">
-			<input type="hidden" name="foto" value="<?php echo $foto?>">
+			<input type="hidden" name="archivo" value="<?php echo $archivo?>">
 			<input type="hidden" name="id_alumno" value="<?php echo $id_alumno?>">
 
 			<div class="form-group">
@@ -130,17 +114,30 @@ if (!empty($action) && $action == "add") {
 			</div>
 			<div class="form-group">
 				<label>Sexo id</label>
-				<input class="form-control" type="number" name="sexo_id" value="<?php echo $sexo_id?>">
+				<select name="sexo_id">
+					<?php
+					foreach ($array_sexo as $sexo) {
+						$id_sexo 		= $sexo["id_sexo"];
+						$nombre_sexo 	= $sexo["nombre_sexo"];
+						if($sexo_id == $id_sexo)
+							$sexo_actual = 'selected="selected"';
+						else
+							$sexo_actual = '';
+
+						echo '<option '.$sexo_actual.' value="'.$id_sexo.'" >'.$nombre_sexo.'</option>';
+					}
+					?>
+				</select>
 			</div>
 			<div class="form-group">
 				<label>Estado</label>
 				<input class="form-control" type="text" name="estado" value="<?php echo $estado?>">
 			</div>
 			<div class="form-group">
-				<label>Foto</label>
+				<label>archivo</label>
 				<?php
-				if (!empty($foto)) {
-					$path_image = "files/imagenes/".$foto;
+				if (!empty($archivo)) {
+					$path_image = "files/imagenes/".$archivo;
 					echo '<img src="'.$path_image.'" width="200" height="100">';
 				}
 				?>

@@ -71,6 +71,12 @@ class alumnos{
 		$oData = new Data($this->db);		
 		return $oData->getList($sql);
 	}
+
+	function eliminar_alumno($id_alumno){
+		$sql = "DELETE FROM " . $this->table . " WHERE id_alumno = '" . $id_alumno . "'";
+		$oData = new Data($this->db);
+		$oData->delete($sql);
+	}// Fin de método delete
 }
 
 ?>

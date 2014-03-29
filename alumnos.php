@@ -14,9 +14,8 @@ if (!empty($action) && $action == "delete") {
 	$id_alumno = $_GET["id_alumno"];
 
 	if (!empty($id_alumno)) {
-		$query_eliminar = "DELETE FROM alumnos WHERE id_alumno = $id_alumno";
-
-		if($mysqli->query($query_eliminar))
+		
+		if($alumno_obj->eliminar_alumno($id_alumno))
 			$mensaje = "Registro eliminado";
 		else
 			$mensaje = "Ocurrio un error";

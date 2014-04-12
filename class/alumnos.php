@@ -80,10 +80,10 @@ class alumnos{
 		$a_res = $oData->get($sql); // Retorna un recorset
 		if( $a_res == false ){ // Si no hay resultados
 		}else{ // Si encuentra resultados
-			$this->id  			= $a_res["id"];
+			$this->id_alumno	= $a_res["id_alumno"];
 			$this->nombre     	= $a_res["nombre"];
 			$this->ap_paterno   = $a_res["ap_paterno"];
-			$this->ap_materno   = $a_res["nombre"];
+			$this->ap_materno   = $a_res["ap_materno"];
 			$this->unidad_academica     = $a_res["unidad_academica"];
 			return true;
 		}// Fin de if						

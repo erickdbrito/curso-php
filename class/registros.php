@@ -82,4 +82,16 @@ class registro_laboratorio{
 			return FALSE;
 		}// Fin de if
 	}
+
+	function verificar_alumno($id_alumno){
+		$oData = new Data($this->db);
+		$sql = "SELECT * FROM registro_laboratorio
+				WHERE id_alumno = $id_alumno AND estatus_maquina = '1'";
+		$a_res = $oData->get($sql); // Retorna un recorset
+		if( $a_res == false ){ // Si no hay resultados
+			return TRUE;
+		}else{ // Si encuentra resultados
+			return FALSE;
+		}// Fin de if
+	}
 } // termina clase

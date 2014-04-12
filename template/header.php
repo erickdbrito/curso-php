@@ -45,9 +45,14 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
+            <?php if(!$pagina == "alta"){ ?>
+            <li><a href="index.php?">Registrar Ingreso</a></li>
+            <li><a href="index.php?action=salida">Registrar Salida</a></li>
+            <?php }else{ ?>
             <li><a href="computadoras.php">Equipos</a></li>
             <li><a href="alumnos.php">Alumnos</a></li>
             <li><a href="registros.php">Registros</a></li>
+            <?php }?>
           </ul>
           
         </div>

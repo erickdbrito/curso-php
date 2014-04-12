@@ -6,7 +6,7 @@ $DBServer = 'localhost'; // e.g 'localhost'
 $DBUser   = 'root';
 $DBPass   = 'root';
 $DBName   = 'curso_web';
-
+$pagina = "";
 $conexion_db = new mysqli($DBServer, $DBUser, $DBPass, $DBName);
 
 // Verificar conexión

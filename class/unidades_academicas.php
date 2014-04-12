@@ -5,7 +5,7 @@ class unidades_academicas{
 	var $id_unidad_academica;
 	var $nombre_unidad_academica;
 
-	function unidad_academica($db){
+	function unidades_academicas($db){
 		$this->db=$db;
 		$this->table="unidades_academicas";
 	}// Fin de constructor

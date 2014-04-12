@@ -97,7 +97,7 @@ if (!empty($action) && $action == "add") {
 				<label class="control-label">Estatus</label>
 				<div class="controls">
 				   	<label class="checkbox">
-			           	<input type="checkbox" <?php if($estatus == "0") echo 'checked="checked"' ?> name="estatus" value="1">Activo<br>
+			           	<input type="checkbox" <?php if($estatus != "0") echo 'checked="checked"' ?> name="estatus" value="1">Activo<br>
 				   	</label>
 			    </div> 
 			</div>

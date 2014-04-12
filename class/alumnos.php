@@ -5,8 +5,10 @@ class alumnos{
 	var $id_alumno;
 	var $matricula;
 	var $nombre;
+	var $ap_paterno;
+	var $ap_materno;
 	var $sexo_id;
-	var $estado;
+	var $unidad_academica;
 	var $archivo;
 
 	function alumnos($db){
@@ -20,16 +22,20 @@ class alumnos{
 		id_alumno,
 		matricula,
 		nombre,
+		ap_paterno,
+		ap_materno,
 		sexo_id,
-		estado,
+		unidad_academica,
 		archivo
 		) 
 		VALUES (
 		'',
 		'" . $this->matricula . "',
 		'" . $this->nombre . "',
+		'" . $this->ap_paterno . "',
+		'" . $this->ap_materno . "',
 		'" . $this->sexo_id . "',
-		'" . $this->estado . "',
+		'" . $this->unidad_academica . "',
 		'" . $this->archivo . "'
 		)";
 		return $oData->add($sql); 
@@ -40,8 +46,10 @@ class alumnos{
 		$sql="UPDATE " . $this->table . " SET 
 			matricula   = '" . $this->matricula . "',
 			nombre      = '" . $this->nombre . "',
+			ap_paterno      = '" . $this->ap_paterno . "',
+			ap_materno      = '" . $this->ap_materno . "',
 			sexo_id     = '" . $this->sexo_id . "',
-			estado      = '" . $this->estado . "',
+			unidad_academica      = '" . $this->unidad_academica . "',
 			archivo     = '" . $this->archivo . "'
 		WHERE id_alumno ='" . $id_alumno . "' LIMIT 1";
 		$oData = new Data($this->db);
@@ -57,8 +65,10 @@ class alumnos{
 		}else{ // Si encuentra resultados
 			$this->matricula  = $a_res["matricula"];
 			$this->nombre     = $a_res["nombre"];
+			$this->ap_paterno     = $a_res["ap_paterno"];
+			$this->ap_materno     = $a_res["nombre"];
 			$this->sexo_id    = $a_res["sexo_id"];
-			$this->estado     = $a_res["estado"];
+			$this->unidad_academica     = $a_res["unidad_academica"];
 			$this->archivo    = $a_res["archivo"];
 			return true;
 		}// Fin de if						

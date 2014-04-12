@@ -143,8 +143,8 @@ if (!empty($action) && $action == "add") {
 			</div>
 
 			<div class="form-group">
-				<label>Unidad Académica</label>
-				<select class="form-control" name="unidad_academica">
+				<label>Sexo</label>
+				<select class="form-control" name="sexo_id">
 					<?php
 					foreach ($array_sexo as $sexo) {
 						$id_sexo 		= $sexo["id_sexo"];
@@ -161,8 +161,8 @@ if (!empty($action) && $action == "add") {
 			</div>
 
 			<div class="form-group">
-				<label>Sexo</label>
-				<select class="form-control" name="sexo_id">
+				<label>Unidad académica</label>
+				<select class="form-control" name="unidad_academica">
 					<?php
 					foreach ($array_unidades as $ua) {
 						$id_ua 		= $ua["id_unidad_academica"];
@@ -177,10 +177,7 @@ if (!empty($action) && $action == "add") {
 					?>
 				</select>
 			</div>
-			<div class="form-group">
-				<label>Estado</label>
-				<input class="form-control" type="text" name="estado" value="<?php echo $estado?>">
-			</div>
+			
 			<div class="form-group">
 				<label>archivo</label>
 				<?php

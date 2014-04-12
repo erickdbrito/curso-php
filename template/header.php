@@ -45,7 +45,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="equipos.php">Equipos</a></li>
+            <li><a href="computadoras.php">Equipos</a></li>
             <li><a href="alumnos.php">Alumnos</a></li>
             <li><a href="registros.php">Registros</a></li>
           </ul>

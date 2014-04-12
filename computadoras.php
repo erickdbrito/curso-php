@@ -41,7 +41,7 @@ if (!empty($action) && $action == "delete") {
           <h1 class="page-header">Computadoras</h1>
 		
 		<div>
-			<a href="computadoras-editar.php?action=add" class="btn">Añadir computadora</a>
+			<a class="btn btn-success" href="computadoras-editar.php?action=add" class="btn">Añadir computadora</a>
 		</div>
 		<table class="table table-striped">
 			<thead>
@@ -54,19 +54,25 @@ if (!empty($action) && $action == "delete") {
 				</tr>
 			</thead>
 			<tbody>
-				<?php    
-				foreach ($array_computadoras as $computadoras) {
-					echo '<tr>';
-					    	echo "<td>"  . $computadoras['id_computadora'] . "</td>";
-					    	echo "<td>"  . $computadoras['nombre'] . "</td>";
-					    	echo "<td> " . $computadoras['descripcion'] . "</td>";
-					    	echo "<td> " . $computadoras['estatus'] . "</td>";
-					    	echo '<td>
-					    			<a class="btn" href="computadoras-editar.php?action=mostrar&id_computadora='.$computadoras['id_computadora'].'">Editar</a>
-					    			<a class="btn" href="computadoras.php?action=delete&id_computadora='.$computadoras['id_computadora'].'">Eliminar</a>
-					    		  </td>';
-					    echo '</tr>';
-				 } 
+				<?php 
+				if (count($array_computadoras)) 
+				{
+					foreach ($array_computadoras as $computadoras) {
+						echo '<tr>';
+						    	echo "<td>"  . $computadoras['id_computadora'] . "</td>";
+						    	echo "<td>"  . $computadoras['nombre'] . "</td>";
+						    	echo "<td> " . $computadoras['descripcion'] . "</td>";
+						    	if($computadoras['estatus'] == 0)
+						    		echo "<td> <span class='label label-warning'>Inactiva</td></span>";
+						    	else
+						    		echo "<td> <span class='label label-success'>Activa</span></td>";
+						    	echo '<td>
+						    			<a class="btn" href="computadoras-editar.php?action=mostrar&id_computadora='.$computadoras['id_computadora'].'">Editar</a>
+						    			<a class="btn" href="computadoras.php?action=delete&id_computadora='.$computadoras['id_computadora'].'">Eliminar</a>
+						    		  </td>';
+						    echo '</tr>';
+					 } 
+				} //if	   
 				?>
 			</tbody>
 		</table>

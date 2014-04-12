@@ -1,8 +1,8 @@
 <?php
 /**
- * Archivo clase de persona
+ * Archivo clase de computadoras
  */
-class persona{
+class computadoras{
 
 	var $nombre;
 	var $fecha_nacimiento;
@@ -10,7 +10,7 @@ class persona{
 	var $curp;
 	var $direccion;
 
-	function declarar_persona($nombre, $fecha_nacimiento, $sexo, $curp, $direccion)
+	function declarar_computadoras($nombre, $fecha_nacimiento, $sexo, $curp, $direccion)
 	{
 		$this->nombre 			= $nombre;
 		$this->fecha_nacimiento = $fecha_nacimiento;

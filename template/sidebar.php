@@ -1,4 +1,4 @@
-		<div class="col-sm-3 col-md-2 sidebar">
+<?php /*		<div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview</a></li>
             <li><a href="#">Reports</a></li>
@@ -18,3 +18,4 @@
             <li><a href="">Another nav item</a></li>
           </ul>
         </div>
+        */ 

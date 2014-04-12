@@ -2,14 +2,17 @@
 require_once("conexion.php");
 require_once("class/data/Data.php");
 require_once("class/alumnos.php");
+require_once("class/unidades_academicas.php");
 require_once("class/sexo.php");
 require_once("class/data/UpLoad.php");
 
-$alumno_obj = new alumnos($mysqli);
-$sexo_obj 	= new sexo($mysqli);
-$upload 	= new UpLoad();
+$alumno_obj 			= new alumnos($mysqli);
+$sexo_obj 				= new sexo($mysqli);
+$unidades_academicas 	= new unidades_academicas($mysqli);
+$upload 				= new UpLoad();
 
-$array_sexo = $sexo_obj->obtener_sexo();
+$array_sexo 	= $sexo_obj->obtener_sexo();
+$array_unidades = $unidades_academicas->list_unidades();
 
 /**
  * Mostrar información del alumno
@@ -24,18 +27,15 @@ if (!empty($action) && $action == "mostrar") {
 		
 		if($alumno_obj->obtener_alumno($id_alumno))
 		{
-			$nombre 	= $alumno_obj->nombre;
-			$matricula 	= $alumno_obj->matricula;
-			$sexo_id 	= $alumno_obj->sexo_id;
-			$estado 	= $alumno_obj->estado;
-			$archivo 	= $alumno_obj->archivo;
+			$nombre 			= $alumno_obj->nombre;
+			$ap_paterno 		= $alumno_obj->ap_paterno;
+			$ap_materno 		= $alumno_obj->ap_materno;
+			$unidad_academica	= $alumno_obj->unidad_academica;
+			$matricula 			= $alumno_obj->matricula;
+			$sexo_id 			= $alumno_obj->sexo_id;
+			$archivo 			= $alumno_obj->archivo;
 		}else{
-			$mensaje = "Ocurrio un error";
-			$nombre 	= "";
-			$matricula 	= "";
-			$sexo_id 	= "";
-			$estado 	= "";
-			$archivo 	= "";
+			$mensaje 	= "Ocurrio un error";
 		}
 	}
 }
@@ -47,23 +47,21 @@ $action = $_POST["action"];
 if (!empty($action) && $action == "actualizar") {
 	
 	$id_alumno 	= $_POST["id_alumno"];
-	$alumno_obj->nombre 	= $nombre 	= $_POST["nombre"];
-	$alumno_obj->matricula 	= $matricula 	= $_POST["matricula"];
-	$alumno_obj->sexo_id 	= $sexo_id 	= $_POST["sexo_id"];
-	$alumno_obj->estado 	= $estado 	= $_POST["estado"];
-	$alumno_obj->archivo 	= $archivo 	= $_POST["archivo"];
+	$alumno_obj->nombre 		= $nombre 		= $_POST["nombre"];
+	$alumno_obj->ap_paterno 	= $ap_paterno 	= $_POST["ap_paterno"];
+	$alumno_obj->ap_materno 	= $ap_materno 	= $_POST["ap_materno"];
+	$alumno_obj->unidad_academica 	= $unidad_academica 	= $_POST["unidad_academica"];
+	$alumno_obj->matricula 		= $matricula 	= $_POST["matricula"];
+	$alumno_obj->sexo_id 		= $sexo_id 		= $_POST["sexo_id"];
+	$alumno_obj->archivo 		= $archivo 		= $_POST["archivo"];
 
 	if (empty($id_alumno)) {
 		# añadir alumno
-
 		$id_alumno = $alumno_obj->agregar_alumno();
-
 	}else{
-
 		$alumno_obj->actualizar_alumno($id_alumno);
-
-		
 	}
+
 	if($_FILES['fileAlumno']['name'] != "")
 	{
 		$ruta_archivo	  = "files/"; 
@@ -78,7 +76,6 @@ if (!empty($action) && $action == "actualizar") {
 		$extension = ".".$obtener_ext[1];
 		$upload->nameFile =  $nameFile = md5($id_alumno).$extension;
 
-	    
 		if($upload->cargaArchivo($_FILES['fileAlumno'], $ruta_archivo))
 		{
 			$alumno_obj->actualizar_archivo($nameFile, $id_alumno);
@@ -91,15 +88,16 @@ if (!empty($action) && $action == "actualizar") {
 	}
 }
 
-
 $action = $_GET["action"];
 
 if (!empty($action) && $action == "add") {
-	$id_alumno = "";
+	$id_alumno 	= "";
 	$nombre 	= "";
+	$ap_paterno = "";
+	$ap_materno	= "";
+	$unidad_academica = "";
 	$matricula 	= "";
 	$sexo_id 	= "";
-	$estado 	= "";
 	$archivo 	= "";
 }
 
@@ -136,8 +134,17 @@ if (!empty($action) && $action == "add") {
 				<input class="form-control" type="text" name="matricula" value="<?php echo $matricula?>">
 			</div>
 			<div class="form-group">
-				<label>Sexo id</label>
-				<select class="form-control" name="sexo_id">
+				<label>Apellido Paterno</label>
+				<input class="form-control"  type="text" name="ap_paterno" value="<?php echo $ap_paterno?>">
+			</div>
+			<div class="form-group">
+				<label>Apellido Materno</label>
+				<input class="form-control"  type="text" name="ap_materno" value="<?php echo $ap_materno?>">
+			</div>
+
+			<div class="form-group">
+				<label>Unidad Académica</label>
+				<select class="form-control" name="unidad_academica">
 					<?php
 					foreach ($array_sexo as $sexo) {
 						$id_sexo 		= $sexo["id_sexo"];
@@ -148,6 +155,24 @@ if (!empty($action) && $action == "add") {
 							$sexo_actual = '';
 
 						echo '<option '.$sexo_actual.' value="'.$id_sexo.'" >'.$nombre_sexo.'</option>';
+					}
+					?>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label>Sexo</label>
+				<select class="form-control" name="sexo_id">
+					<?php
+					foreach ($array_unidades as $ua) {
+						$id_ua 		= $ua["id_unidad_academica"];
+						$nombre_ua 	= $ua["nombre_unidad_academica"];
+						if($ua_id == $id_ua)
+							$ua_actual = 'selected="selected"';
+						else
+							$ua_actual = '';
+
+						echo '<option '.$ua_actual.' value="'.$id_ua.'" >'.$nombre_ua.'</option>';
 					}
 					?>
 				</select>
@@ -171,7 +196,6 @@ if (!empty($action) && $action == "add") {
 			</div>
 		</form>
 
-		
 	</div>
  <?php
     /**

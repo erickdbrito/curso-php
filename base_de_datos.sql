@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Servidor: localhost
--- Tiempo de generación: 12-04-2014 a las 09:11:40
+-- Tiempo de generación: 12-04-2014 a las 13:48:27
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -35,7 +35,7 @@ CREATE TABLE `alumnos` (
 -- Volcar la base de datos para la tabla `alumnos`
 -- 
 
-INSERT INTO `alumnos` VALUES (1, 'ERICK BRITO Arroyo', '', '', 0, '105652', 1, 'c4ca4238a0b923820dcc509a6f75849b.pdf');
+INSERT INTO `alumnos` VALUES (1, 'ERICK', 'brito', 'arroyo', 1, '10565', 1, 'c4ca4238a0b923820dcc509a6f75849b.pdf');
 INSERT INTO `alumnos` VALUES (5, 'Daniel', '', '', 0, '430303', 1, '');
 
 -- --------------------------------------------------------
@@ -50,12 +50,14 @@ CREATE TABLE `computadoras` (
   `descripcion` text NOT NULL,
   `estatus` int(11) NOT NULL default '1',
   PRIMARY KEY  (`id_computadora`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- 
 -- Volcar la base de datos para la tabla `computadoras`
 -- 
 
+INSERT INTO `computadoras` VALUES (1, 'Equipo 1', '', 1);
+INSERT INTO `computadoras` VALUES (2, 'Equipo 2', '', 1);
 
 -- --------------------------------------------------------
 
@@ -142,19 +144,24 @@ CREATE TABLE `registro_laboratorio` (
   `id_alumno` int(11) NOT NULL,
   `id_computadora` int(11) NOT NULL,
   `fecha_inicio` datetime NOT NULL,
-  `fecha_termino` smallint(6) NOT NULL,
+  `fecha_termino` datetime NOT NULL,
   `app_office` smallint(6) NOT NULL,
   `app_internet` smallint(6) NOT NULL,
   `app_linux` smallint(6) NOT NULL,
   `app_otra` smallint(6) NOT NULL,
   `estatus_maquina` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 -- 
 -- Volcar la base de datos para la tabla `registro_laboratorio`
 -- 
 
+INSERT INTO `registro_laboratorio` VALUES (4, 1, 1, '2014-04-12 07:23:00', '2014-04-12 08:01:48', 0, 0, 0, 0, 0);
+INSERT INTO `registro_laboratorio` VALUES (5, 1, 1, '2014-04-12 08:05:17', '2014-04-12 08:07:05', 0, 0, 0, 0, 0);
+INSERT INTO `registro_laboratorio` VALUES (6, 1, 1, '2014-04-12 08:07:14', '2014-04-12 08:17:25', 0, 0, 0, 0, 0);
+INSERT INTO `registro_laboratorio` VALUES (7, 1, 1, '2014-04-12 08:18:15', '0000-00-00 00:00:00', 0, 0, 0, 0, 1);
+INSERT INTO `registro_laboratorio` VALUES (14, 5, 2, '2014-04-12 08:29:55', '0000-00-00 00:00:00', 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 

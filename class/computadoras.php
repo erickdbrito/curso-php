@@ -62,11 +62,17 @@ class computadoras{
 		return $oData->getList($sql);
 	}
 
+	function list_computadoras_activas(){
+		$sql = "SELECT * FROM ".$this->table." WHERE estatus = '1'";	
+		$oData = new Data($this->db);		
+		return $oData->getList($sql);
+	}
+
 	function eliminar_computadora($id_computadora){
 		$sql = "DELETE " . $this->table . " WHERE id_computadora = '" . $id_computadora . "'";
 		$oData = new Data($this->db);
 		$oData->delete($sql);
 	}// Fin de método delete
 
-
+	
 } // termina clase

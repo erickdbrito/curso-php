@@ -74,6 +74,22 @@ class alumnos{
 		}// Fin de if						
 	}// Fin de método 
 
+	function obtener_alumno_por_matricula($matricula){
+		$oData = new Data($this->db);
+		$sql = "SELECT * FROM " . $this->table . " WHERE matricula = '" . $matricula  . "'";		
+		$a_res = $oData->get($sql); // Retorna un recorset
+		if( $a_res == false ){ // Si no hay resultados
+		}else{ // Si encuentra resultados
+			$this->id  			= $a_res["id"];
+			$this->nombre     	= $a_res["nombre"];
+			$this->ap_paterno   = $a_res["ap_paterno"];
+			$this->ap_materno   = $a_res["nombre"];
+			$this->unidad_academica     = $a_res["unidad_academica"];
+			return true;
+		}// Fin de if						
+	}// Fin de método 
+
+
 	function lista_alumnos(){
 		$sql = "SELECT * FROM ".$this->table." 
 				LEFT JOIN sexo 

@@ -13,11 +13,17 @@ $pagina = "alta";
 if(!empty($_POST["matricula"]))
 	$matricula = $_POST["matricula"];
 
+if(!empty($_GET["action"]))
+	$action = $_GET["action"];
+elseif(!empty($_POST["action"]))
+	$action = $_POST["action"];
+else
+	$action = "";
+
 if (!empty($matricula)) {
 
 	if($alumno_obj->obtener_alumno_por_matricula($matricula))
 	{
-
 		$id_alumno 			= $alumno_obj->id_alumno;
 		$nombre_alumno 		= $alumno_obj->nombre;
 		$ap_paterno 		= $alumno_obj->ap_paterno;
@@ -43,9 +49,13 @@ if (!empty($matricula)) {
 				{
 					$registro_obj->id_alumno 		= $id_alumno;
 					$registro_obj->id_computadora 	= $computadora["id_computadora"];
+					if(!empty($app_office))
 					$registro_obj->app_office 		= $app_office;
+					if(!empty($app_internet))
 					$registro_obj->app_internet 	= $app_internet;
+					if(!empty($app_linux))
 					$registro_obj->app_linux	 	= $app_linux;
+					if(!empty($app_otra))
 					$registro_obj->app_otra 		= $app_otra;
 					$registro_obj->agregar_registro();
 					
@@ -57,9 +67,18 @@ if (!empty($matricula)) {
 				}
 			}
 		}else{
-			$mensaje = $mensaje = "<div class='well'>
+			$id_registro = $registro_obj->id;
+
+			if($action == "salida"){
+				$registro_obj->liberar_equipo($id_registro);
+				$mensaje = "<div class='well'>
+								   <strong>Gracias, Regresa pronto </strong></div>";
+				$action = "";
+			}else{	
+				$mensaje = "<div class='well'>
 								   <strong>".$nombre_alumno." ".$ap_paterno." ".$ap_materno."
  								   se encuentra usando un equipo </strong></div>";
+			}
 		}		
 	}else{
 		$mensaje = "<div class='alert'>Alumno no encontrado</div>";
@@ -91,6 +110,10 @@ if (!empty($matricula)) {
 			<form class="form-vertical" method="post"  >
 				<label>Matricula</label>
 				<input name="matricula">
+		<?php 
+		if($action != "salida")
+		{
+		?>	
 			<div class="checkbox"> 	
 				<label>Office</label>
 				<input type="checkbox" name="app_office">
@@ -107,7 +130,11 @@ if (!empty($matricula)) {
 				<label>Linux</label>
 				<input type="checkbox" name="app_linux">
 			</div>
-				<button type="submit" class="btn">Asignar Maquina </button>
+			<button type="submit" class="btn">Asignar Maquina </button>
+		<?php }else{ ?>
+			<input type="hidden" name="action" value="salida">
+			<button type="submit" class="btn">Liberar Maquina </button>
+		<?php }?>
 			</form>
 		</div>
 		

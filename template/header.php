@@ -45,7 +45,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <?php if(!$pagina == "alta"){ ?>
+            <?php if($pagina == "alta"){ ?>
             <li><a href="index.php?">Registrar Ingreso</a></li>
             <li><a href="index.php?action=salida">Registrar Salida</a></li>
             <?php }else{ ?>

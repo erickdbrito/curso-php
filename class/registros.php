@@ -48,7 +48,7 @@ class registro_laboratorio{
 	}// Fin de método add
 
 
-	function actualizar_registro($id_registro){		
+	function liberar_equipo($id_registro){		
 		$sql="UPDATE " . $this->table . " SET 
 			fecha_termino   = '" . date("Y-m-d h:i:s") . "',
 			estatus_maquina = '0'
@@ -91,6 +91,7 @@ class registro_laboratorio{
 		if( $a_res == false ){ // Si no hay resultados
 			return TRUE;
 		}else{ // Si encuentra resultados
+			$this->id	= $a_res["id"];
 			return FALSE;
 		}// Fin de if
 	}

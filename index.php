@@ -45,8 +45,9 @@ if (!empty($matricula)) {
 			$array_computadoras_activas = $computadora_obj->list_computadoras_activas();
 
 			foreach ($array_computadoras_activas as $computadora) {
-				if($registro_obj->verificar_equipo_disponible($computadora["id_computadora"]))
+				if($registro_obj->verificar_equipo_disponible($computadora["id_computadora"], $id_alumno))
 				{
+					$registro_obj->verificar_equipo_disponible($computadora["id_computadora"], $id_alumno);
 					$registro_obj->id_alumno 		= $id_alumno;
 					$registro_obj->id_computadora 	= $computadora["id_computadora"];
 					if(!empty($app_office))
@@ -64,7 +65,9 @@ if (!empty($matricula)) {
 							Favor usar el equipo: ".$computadora["nombre"]."</div>";
 				}else{
 					$mensaje = "<div class='alert'>No hay equipos diponibles</div>";
+					continue;
 				}
+
 			}
 		}else{
 			$id_registro = $registro_obj->id;

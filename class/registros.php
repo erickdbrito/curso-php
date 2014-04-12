@@ -59,7 +59,10 @@ class registro_laboratorio{
 
 
 	function obtener_registros(){
-		$sql = "SELECT * FROM ".$this->table;	
+		$sql = "SELECT CONCAT_WS( alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno ) AS nombre_completo, matricula, fecha_inicio, computadoras.nombre AS nombre_equipo, app_office, app_internet, app_linux, app_otra
+				FROM  `registro_laboratorio` 
+				INNER JOIN alumnos ON registro_laboratorio.id_alumno = alumnos.id_alumno
+				INNER JOIN computadoras ON computadoras.id_computadora = registro_laboratorio.id_computadora";	
 		$oData = new Data($this->db);		
 		return $oData->getList($sql);
 	}
@@ -74,7 +77,7 @@ class registro_laboratorio{
 	function verificar_equipo_disponible($id_computadora){
 		$oData = new Data($this->db);
 		$sql = "SELECT * FROM registro_laboratorio
-				WHERE id_computadora != $id_computadora AND estatus_maquina = '0'";
+				WHERE id_computadora = $id_computadora AND estatus_maquina = '0'";
 		$a_res = $oData->get($sql); // Retorna un recorset
 		if( $a_res == false ){ // Si no hay resultados
 			return TRUE;

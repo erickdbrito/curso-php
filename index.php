@@ -8,7 +8,7 @@ require_once("class/registros.php");
 $computadora_obj = new computadoras($mysqli);
 $alumno_obj		 = new alumnos($mysqli);
 $registro_obj    = new registro_laboratorio($mysqli);
-$pagina = $alta;
+$pagina = "alta";
 
 if(!empty($_POST["matricula"]))
 	$matricula = $_POST["matricula"];
@@ -26,9 +26,13 @@ if (!empty($matricula)) {
 
 		if($registro_obj->verificar_alumno($id_alumno))
 		{
+			if(!empty($_POST["app_office"]))
 			$app_office 	= $_POST["app_office"];
+			if(!empty($_POST["app_internet"]))
 			$app_internet 	= $_POST["app_internet"];
+			if(!empty($_POST["app_linux"]))
 			$app_linux 		= $_POST["app_linux"];
+			if(!empty($_POST["app_otra"]))
 			$app_otra 		= $_POST["app_otra"];
 
 
@@ -87,14 +91,22 @@ if (!empty($matricula)) {
 			<form class="form-vertical" method="post"  >
 				<label>Matricula</label>
 				<input name="matricula">
+			<div class="checkbox"> 	
 				<label>Office</label>
 				<input type="checkbox" name="app_office">
+			</div>
+			<div class="checkbox"> 	
 				<label>Internet</label>
 				<input type="checkbox" name="app_internet">
+			</div>
+			<div class="checkbox"> 	
 				<label>Otra</label>
 				<input type="checkbox" name="app_otra">
+			</div>
+			<div class="checkbox"> 	
 				<label>Linux</label>
 				<input type="checkbox" name="app_linux">
+			</div>
 				<button type="submit" class="btn">Asignar Maquina </button>
 			</form>
 		</div>
